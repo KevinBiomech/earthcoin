@@ -3271,10 +3271,14 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         return true;
     }
 
-
-
-
-
+if (pfrom->nVersion < 72000)
+    {
+      printf("partner %s using an old client %d, disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+      pfrom->fDisconnect = true;
+      pfrom->fDisconnect = true;
+      return true;
+    }
+    
     if (strCommand == "version")
     {
         // Each connection can only send one version message
